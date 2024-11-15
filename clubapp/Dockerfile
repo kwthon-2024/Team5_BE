@@ -1,14 +1,25 @@
-# Step 1: Use an official OpenJDK 21 runtime as the base image
-FROM eclipse-temurin:21-jdk-jammy
+# Step 1: Use JDK 21 for the build stage
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
-# Step 2: Set the working directory inside the container
-WORKDIR /app
+# Step 2: Set up the Gradle build environment
+COPY gradlew . 
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
 
-# Step 3: Copy the application JAR to the container
-COPY build/libs/groupapp-0.0.1-SNAPSHOT.jar app.jar
+# Step 3: Ensure the gradlew script is executable and build the application
+RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
 
-# Step 4: Expose the port your app runs on (default Spring Boot port)
+# Step 4: Use JDK 21 for the runtime stage
+FROM eclipse-temurin:21-jdk-alpine
+
+# Step 5: Expose the application port
 EXPOSE 8080
 
-# Step 5: Run the application
+# Step 6: Copy the built JAR file from the builder stage
+COPY --from=builder build/libs/groupapp-0.0.1-SNAPSHOT.jar app.jar
+
+# Step 7: Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
