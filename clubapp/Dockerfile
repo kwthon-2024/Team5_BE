@@ -1,7 +1,7 @@
 # Step 1: Use JDK 21 for the build stage
 FROM eclipse-temurin:21-jdk-alpine AS builder
 
-# Step 2: Set up the Gradle build environment
+# Step 2: Set up the Gradle build environment adsfawef
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
