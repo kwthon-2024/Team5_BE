@@ -1,8 +1,8 @@
 package beanpowder.clubapp.controller;
 
+import beanpowder.clubapp.dto.RecommendationRequest;
 import beanpowder.clubapp.entity.Club;
-import beanpowder.clubapp.service.ClubService;
-import org.springframework.http.ResponseEntity;
+import beanpowder.clubapp.service.RecommendationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,40 +11,23 @@ import java.util.List;
 @RequestMapping("/api/clubs")
 public class ClubController {
 
-    private final ClubService clubService;
+    private final RecommendationService recommendationService;
 
-    public ClubController(ClubService clubService) {
-        this.clubService = clubService;
+    public ClubController(RecommendationService recommendationService) {
+        this.recommendationService = recommendationService;
     }
 
-    // 모든 클럽 조회
     @GetMapping
     public List<Club> getAllClubs() {
-        return clubService.getAllClubs();
+        return recommendationService.getAllClubs();
     }
 
-    // 카테고리에 따른 추천 클럽 조회
     @PostMapping("/recommendations")
-    public List<Club> recommendClubs(@RequestBody String category) {
-        return clubService.recommendClubs(category);
-    }
+    public List<Club> getRecommendations(@RequestBody RecommendationRequest request) {
+        // 디버깅: 요청 데이터 확인
+        System.out.println("Received Category: " + request.getCategory());
+        System.out.println("Received Purpose: " + request.getPurpose());
 
-    // 단일 클럽 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Club> getClubById(@PathVariable Integer id) {
-        return ResponseEntity.ok(clubService.getClubById(id));
-    }
-
-    // 새 클럽 추가
-    @PostMapping
-    public Club createClub(@RequestBody Club club) {
-        return clubService.createClub(club);
-    }
-
-    // 클럽 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClub(@PathVariable Integer id) {
-        clubService.deleteClub(id);
-        return ResponseEntity.noContent().build();
+        return recommendationService.getRecommendedClubs(request);
     }
 }

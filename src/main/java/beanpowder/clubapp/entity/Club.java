@@ -1,10 +1,6 @@
 package beanpowder.clubapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "new_clubs") // 테이블 이름과 매핑
@@ -18,9 +14,16 @@ public class Club {
     private String category;
     private String field;
     private String room;
+
+    @Column(name = "membership_fee")
     private Integer membershipFee;
+
+    @Column(name = "is_open")
     private Boolean isOpen;
+
     private String purpose; // 가입 목적
+
+    @Column(name = "image_url")
     private String imageUrl; // 이미지 URL
 
     public Club() {}
@@ -107,5 +110,20 @@ public class Club {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Club{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", field='" + field + '\'' +
+                ", room='" + room + '\'' +
+                ", membershipFee=" + membershipFee +
+                ", isOpen=" + isOpen +
+                ", purpose='" + purpose + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
