@@ -1,8 +1,8 @@
 # Step 1: Use JDK 21 for the build stage
 FROM eclipse-temurin:21-jdk-alpine AS builder
 
-# Step 2: Set up the Gradle build environment
-COPY gradlew . 
+# Step 2: Set up the Gradle build environment adsfawef
+COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
@@ -18,8 +18,8 @@ FROM eclipse-temurin:21-jdk-alpine
 # Step 5: Expose the application port
 EXPOSE 8080
 
-# Step 6: Copy the built JAR file from the builder stage
-COPY --from=builder build/libs/groupapp-0.0.1-SNAPSHOT.jar app.jar
+# Step 6: Copy the built JAR file from the builder stage (use wildcard to avoid filename mismatch)
+COPY --from=builder build/libs/*.jar app.jar
 
 # Step 7: Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
