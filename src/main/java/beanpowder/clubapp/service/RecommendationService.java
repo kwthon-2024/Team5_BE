@@ -1,6 +1,5 @@
 package beanpowder.clubapp.service;
 
-import beanpowder.clubapp.dto.RecommendationRequest;
 import beanpowder.clubapp.entity.Club;
 import beanpowder.clubapp.repository.ClubRepository;
 import org.springframework.stereotype.Service;
@@ -16,17 +15,8 @@ public class RecommendationService {
         this.clubRepository = clubRepository;
     }
 
-    public List<Club> getAllClubs() {
-        return clubRepository.findAll();
-    }
-
-    public List<Club> getRecommendedClubs(RecommendationRequest request) {
-        System.out.println("Finding clubs for category: " + request.getCategory());
-        System.out.println("Finding clubs for purpose: " + request.getPurpose());
-
-        return clubRepository.findByCategoryAndPurpose(
-                request.getCategory(),
-                request.getPurpose()
-        );
+    // 카테고리로 추천 동아리 필터링
+    public List<Club> getRecommendedClubsByCategory(String category) {
+        return clubRepository.findByCategory(category); // 카테고리로 필터링
     }
 }

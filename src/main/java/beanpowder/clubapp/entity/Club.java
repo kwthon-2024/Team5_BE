@@ -3,12 +3,12 @@ package beanpowder.clubapp.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "new_clubs") // 테이블 이름과 매핑
+@Table(name = "new_clubs") // 데이터베이스 테이블과 매핑
 public class Club {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String name;
     private String category;
@@ -21,30 +21,17 @@ public class Club {
     @Column(name = "is_open")
     private Boolean isOpen;
 
-    private String purpose; // 가입 목적
-
     @Column(name = "image_url")
-    private String imageUrl; // 이미지 URL
+    private String imageUrl;
 
     public Club() {}
 
-    public Club(String name, String category, String field, String room, Integer membershipFee, Boolean isOpen, String purpose, String imageUrl) {
-        this.name = name;
-        this.category = category;
-        this.field = field;
-        this.room = room;
-        this.membershipFee = membershipFee;
-        this.isOpen = isOpen;
-        this.purpose = purpose;
-        this.imageUrl = imageUrl;
-    }
-
     // Getters and Setters
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,34 +83,11 @@ public class Club {
         this.isOpen = isOpen;
     }
 
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "Club{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", field='" + field + '\'' +
-                ", room='" + room + '\'' +
-                ", membershipFee=" + membershipFee +
-                ", isOpen=" + isOpen +
-                ", purpose='" + purpose + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
     }
 }

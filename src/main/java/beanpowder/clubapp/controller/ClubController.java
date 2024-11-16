@@ -1,8 +1,7 @@
 package beanpowder.clubapp.controller;
 
-import beanpowder.clubapp.dto.RecommendationRequest;
 import beanpowder.clubapp.entity.Club;
-import beanpowder.clubapp.service.RecommendationService;
+import beanpowder.clubapp.service.ClubService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,23 +10,21 @@ import java.util.List;
 @RequestMapping("/api/clubs")
 public class ClubController {
 
-    private final RecommendationService recommendationService;
+    private final ClubService clubService;
 
-    public ClubController(RecommendationService recommendationService) {
-        this.recommendationService = recommendationService;
+    public ClubController(ClubService clubService) {
+        this.clubService = clubService;
     }
 
+    // 전체 동아리 리스트 가져오기
     @GetMapping
     public List<Club> getAllClubs() {
-        return recommendationService.getAllClubs();
+        return clubService.getAllClubs();
     }
 
-    @PostMapping("/recommendations")
-    public List<Club> getRecommendations(@RequestBody RecommendationRequest request) {
-        // 디버깅: 요청 데이터 확인
-        System.out.println("Received Category: " + request.getCategory());
-        System.out.println("Received Purpose: " + request.getPurpose());
-
-        return recommendationService.getRecommendedClubs(request);
+    // 카테고리로 추천 동아리 가져오기
+    @GetMapping("/recommendations")
+    public List<Club> getRecommendedClubsByCategory(@RequestParam String category) {
+        return clubService.getClubsByCategory(category);
     }
 }

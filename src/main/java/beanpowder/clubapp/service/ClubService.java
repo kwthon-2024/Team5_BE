@@ -15,29 +15,13 @@ public class ClubService {
         this.clubRepository = clubRepository;
     }
 
-    // 모든 클럽 조회
+    // 전체 동아리 리스트 반환
     public List<Club> getAllClubs() {
         return clubRepository.findAll();
     }
 
-    // 카테고리에 따른 클럽 추천
-    public List<Club> recommendClubs(String category) {
+    // 카테고리로 동아리 추천
+    public List<Club> getClubsByCategory(String category) {
         return clubRepository.findByCategory(category);
-    }
-
-    // 단일 클럽 조회
-    public Club getClubById(Integer id) {
-        return clubRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Club not found"));
-    }
-
-    // 새 클럽 추가
-    public Club createClub(Club club) {
-        return clubRepository.save(club);
-    }
-
-    // 클럽 삭제
-    public void deleteClub(Integer id) {
-        clubRepository.deleteById(id);
     }
 }
